@@ -6,7 +6,7 @@ import Dashboard from './Dashboard'
 import PM from './components/PM'
 import Home from './components/Screen/Home'
 import FSOR from './components/FSOR'
-import About from './components/About'
+
 import Service from './components/Service'
 
 function App() {
