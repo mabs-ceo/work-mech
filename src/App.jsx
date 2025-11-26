@@ -8,6 +8,7 @@ import Home from './components/Screen/Home'
 import FSOR from './components/FSOR'
 
 import Service from './components/Service'
+import PumpCalSuite from './components/PumpCal'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,7 @@ function App() {
   <Route path={"pm"} element={<PM />} />
   <Route path={"fsor"} element={<FSOR />} />
   <Route path={"service"} element={<Service />} />
+  <Route path={"cal"} element={<PumpCalSuite />} />
   
   </Route>
   {/* 

@@ -18,6 +18,9 @@ export default function Dashboard() {
     <Link to='service' className="p-5 rounded-2xl bg-white shadow-md text-center font-medium hover:scale-95 active:scale-90 transition cursor-pointer col-span-2">
       SERVICE
     </Link>
+    <Link to='cal' className="mb-10 p-5 rounded-2xl bg-white shadow-md text-center font-medium hover:scale-95 active:scale-90 transition cursor-pointer col-span-2">
+      CALCULATOR
+    </Link>
   </div>
   <Outlet />
 </div>
