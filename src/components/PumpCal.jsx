@@ -82,7 +82,7 @@ export default function DiaphragmPumpFlowDynamic() {
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">Actual Flow (m³/hr)</label>
+          <label className="block font-semibold mb-1">Required Flow (m³/hr)</label>
           <input
             type="number"
             value={actualFlow}
