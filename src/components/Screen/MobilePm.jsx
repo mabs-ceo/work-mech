@@ -6,21 +6,22 @@ export default function MobilePm({ data }) {
   const [isExpand, setIsExpand] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [message, setMessage] = useState("");
   // Load saved phone
   useEffect(() => {
     const saved = localStorage.getItem("pm_phone");
     if (saved) setPhoneNumber(saved);
   }, []);
 
-  const savePhone = () => {
-    if (phoneNumber.trim()) {
-      localStorage.setItem("pm_phone", phoneNumber);
-      alert("Phone saved!");
-    } else {
-      alert("Enter a valid phone number");
-    }
-  };
+const savePhone = () => {
+  if (phoneNumber.trim()) {
+    localStorage.setItem("pm_phone", phoneNumber);
+    setMessage("Phone saved!");
+  } else {
+    setMessage("Enter a valid phone number");
+  }
+};
+
 
   const clearPhone = () => {
     localStorage.removeItem("pm_phone");
@@ -84,7 +85,7 @@ export default function MobilePm({ data }) {
 
         {/* Phone number */}
         <div className="bg-gray-100 p-3 rounded mb-3">
-          <p className="font-semibold mb-1">WhatsApp Number</p>
+          <p className="font-semibold mb-1">WhatsApp Number {message && <span className="text-sm text-green-600 ml-2">{message}</span>}</p>
           <input
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
