@@ -226,7 +226,7 @@ export default function MobilePm() {
       return `${i + 1}. ${name} - ${pkg}`;
     });
 
-    const msg = lines.join("\\n");
+    const msg = lines.join("\n");
     const url = `https://wa.me/${trimmed}?text=${encodeURIComponent(msg)}`;
 
     // open in new tab
