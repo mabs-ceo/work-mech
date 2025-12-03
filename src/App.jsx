@@ -10,6 +10,7 @@ import FSOR from './components/FSOR'
 import Service from './components/Service'
 import PumpCalSuite from './components/PumpCal'
 import MobilePm from './components/Screen/MobilePm'
+import ParentPage from './components/ParentPage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,7 +21,7 @@ function App() {
   <Routes>
   <Route path='/' element={<Home />} />
   <Route path={"dashboard"} element={<Dashboard />} >
-  <Route path={"pm"} element={<MobilePm />} />
+  <Route path={"pm"} element={<ParentPage />} />
   <Route path={"fsor"} element={<FSOR />} />
   <Route path={"service"} element={<Service />} />
   <Route path={"cal"} element={<PumpCalSuite />} />

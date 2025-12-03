@@ -227,10 +227,15 @@ export default function MobilePm() {
     });
 
     const msg = lines.join("\n");
-    const url = `https://wa.me/${trimmed}?text=${encodeURIComponent(msg)}`;
+   const url = `https://wa.me/${trimmed}?text=${encodeURIComponent(msg)}`;
 
     // open in new tab
     try {
+  // iOS wrapper link updater
+  if (window.pmUpdateLink) {
+    window.pmUpdateLink(trimmed, msg);
+  }
+
       window.open(url, "_blank", "noopener,noreferrer");
       setToastMessage("Opening WhatsApp...");
     } catch (err) {

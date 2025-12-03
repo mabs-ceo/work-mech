@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+/* iOS fix: force numeric keypad for tel input */
+input[type="tel"] {
+  -webkit-text-security: none !important;
+}
+
+@media (min-width: 768px) {
+  #pm-whatsapp-link {
+    display: none !important;
+  }
+}

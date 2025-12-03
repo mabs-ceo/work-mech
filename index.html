@@ -10,5 +10,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+  // Allows MobilePm to update the WhatsApp link dynamically
+  window.pmSetWhatsappLinkHref = function (url) {
+    document.getElementById("pm-whatsapp-link").href = url;
+  };
+
+  // iOS fallback (if popup blocked)
+  window.pmIOSOpen = function (url) {
+    document.getElementById("whatsapp-ios-fallback").src = url;
+  };
+</script>
   </body>
 </html>
