@@ -41,7 +41,7 @@ export default function MobilePm({ data }) {
     );
   };
 
-  // Safe filtered data
+  // Filtered data safely
   const filteredData = useMemo(() => {
     if (!Array.isArray(data)) return [];
 
@@ -58,7 +58,6 @@ export default function MobilePm({ data }) {
     });
   }, [data, searchTerm]);
 
-  // Toggle item selection
   const toggleSelectItem = (item) => {
     setSelectedItems((prev) =>
       prev.includes(item)
@@ -67,58 +66,54 @@ export default function MobilePm({ data }) {
     );
   };
 
-  // Memoized header inputs for mobile keyboard stability
-  const Header = useMemo(() => (
-    <div className="w-full max-w-md">
-      {/* Search input */}
-      <input
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onTouchStart={(e) => e.stopPropagation()}
-        className="font-bold mb-4 w-full bg-amber-50 px-4 py-2 rounded"
-        placeholder="Search Equipment, Service, or Task..."
-      />
-
-      {/* Phone number */}
-      <div className="bg-gray-100 p-3 rounded mb-3">
-        <p className="font-semibold mb-1">WhatsApp Number</p>
-        <input
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          // onTouchStart={(e) => e.stopPropagation()}
-          className="w-full px-3 py-2 rounded border"
-          placeholder="Enter phone number (e.g. 6591234567)"
-        />
-        <div className="flex gap-3 mt-2">
-          <button onClick={savePhone} className="bg-green-600 text-white px-3 py-1 rounded">
-            Save
-          </button>
-          <button onClick={clearPhone} className="bg-red-600 text-white px-3 py-1 rounded">
-            Clear
-          </button>
-        </div>
-      </div>
-
-      {/* WhatsApp send button */}
-      <button
-        onClick={sendWhatsApp}
-        className="bg-blue-600 text-white px-4 py-2 rounded w-full mb-4"
-      >
-        Send Selected via WhatsApp
-      </button>
-    </div>
-  ), [searchTerm, phoneNumber, selectedItems]);
-
   return (
     <div className="flex flex-col items-center max-w-[750px] mx-auto">
-      <h1 className="font-bold text-lg mt-2">Preventive Maintenance (PM) Schedule</h1>
 
-      {/* Header inputs */}
-      {Header}
+      <h1 className="font-bold text-lg mt-2">Preventive Maintenance (PM) Schedule 😎</h1>
+
+      {/* --- HEADER SECTION --- */}
+      <div className="w-full max-w-md">
+
+        {/* Search input */}
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="font-bold mb-4 w-full bg-amber-50 px-4 py-2 rounded"
+          placeholder="Search Equipment, Service, or Task..."
+        />
+
+        {/* Phone number */}
+        <div className="bg-gray-100 p-3 rounded mb-3">
+          <p className="font-semibold mb-1">WhatsApp Number</p>
+          <input
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            className="w-full px-3 py-2 rounded border"
+            placeholder="Enter phone number (e.g. 6591234567)"
+          />
+          <div className="flex gap-3 mt-2">
+            <button onClick={savePhone} className="bg-green-600 text-white px-3 py-1 rounded">
+              Save
+            </button>
+            <button onClick={clearPhone} className="bg-red-600 text-white px-3 py-1 rounded">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        {/* WhatsApp send button */}
+        <button
+          onClick={sendWhatsApp}
+          className="bg-blue-600 text-white px-4 py-2 rounded w-full mb-4"
+        >
+          Send Selected via WhatsApp
+        </button>
+
+      </div>
 
       <p className="font-mono text-[12px] m-2">{filteredData.length} results found</p>
 
-      {/* Data cards */}
+      {/* --- LIST SECTION --- */}
       {filteredData.map((item, index) => {
         const details = item.ServiceDetails || {};
         const keys = Object.keys(details);
@@ -164,6 +159,7 @@ export default function MobilePm({ data }) {
           </div>
         );
       })}
+
     </div>
   );
 }
