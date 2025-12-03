@@ -3,12 +3,13 @@ import { useState } from 'react'
 import './App.css'
 import {  BrowserRouter, Route, Routes } from 'react-router'
 import Dashboard from './Dashboard'
-import PM from './components/PM'
+
 import Home from './components/Screen/Home'
 import FSOR from './components/FSOR'
 
 import Service from './components/Service'
 import PumpCalSuite from './components/PumpCal'
+import MobilePm from './components/Screen/MobilePm'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -19,7 +20,7 @@ function App() {
   <Routes>
   <Route path='/' element={<Home />} />
   <Route path={"dashboard"} element={<Dashboard />} >
-  <Route path={"pm"} element={<PM />} />
+  <Route path={"pm"} element={<MobilePm />} />
   <Route path={"fsor"} element={<FSOR />} />
   <Route path={"service"} element={<Service />} />
   <Route path={"cal"} element={<PumpCalSuite />} />
