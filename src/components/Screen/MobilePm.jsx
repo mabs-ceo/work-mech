@@ -85,7 +85,7 @@ export default function MobilePm({ data }) {
         <input
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
-          onTouchStart={(e) => e.stopPropagation()}
+          // onTouchStart={(e) => e.stopPropagation()}
           className="w-full px-3 py-2 rounded border"
           placeholder="Enter phone number (e.g. 6591234567)"
         />
