@@ -1,12 +1,25 @@
 import React, { useState, useEffect, useMemo } from "react";
 
+// ✅ Memoized phone input so it doesn't lose focus on re-renders
+const PhoneInput = React.memo(({ phoneNumber, setPhoneNumber }) => (
+  <input
+    type="tel" // ✅ ensures mobile keypad stays open
+    value={phoneNumber}
+    onChange={(e) => setPhoneNumber(e.target.value)}
+    className="w-full px-3 py-2 rounded border"
+    placeholder="Enter phone number (e.g. 6591234567)"
+    onFocus={() => console.log("focused")}
+    onBlur={() => console.log("blurred")}
+  />
+));
+
 export default function MobilePm({ data }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [isExpand, setIsExpand] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [message, setMessage] = useState(""); // ✅ inline feedback instead of alert
+  const [message, setMessage] = useState("");
 
   // Load saved phone
   useEffect(() => {
@@ -74,7 +87,7 @@ export default function MobilePm({ data }) {
   };
 
   return (
-    <div className="flex flex-col items-center max-w-[750px] mx-auto">
+    <div className="flex flex-col items-center max-w-[750px] mx-auto min-h-screen">
       <h1 className="font-bold text-lg mt-2">
         Preventive Maintenance (PM) Schedule
       </h1>
@@ -92,11 +105,9 @@ export default function MobilePm({ data }) {
         {/* Phone number */}
         <div className="bg-gray-100 p-3 rounded mb-3">
           <p className="font-semibold mb-1">WhatsApp Number</p>
-          <input
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="w-full px-3 py-2 rounded border"
-            placeholder="Enter phone number (e.g. 6591234567)"
+          <PhoneInput
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
           />
           <div className="flex gap-3 mt-2">
             <button
@@ -112,7 +123,6 @@ export default function MobilePm({ data }) {
               Clear
             </button>
           </div>
-          {/* ✅ Inline message */}
           {message && (
             <p className="text-sm mt-2 text-blue-700 font-medium">{message}</p>
           )}
