@@ -5,6 +5,9 @@ import { makeIOSWhatsAppUrl } from "./iosWhatsappLink";
 
 export default function ParentPage() {
   const [whatsappUrl, setWhatsappUrl] = useState("#");
+const isIOS =
+  typeof navigator !== "undefined" &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   useEffect(() => {
     // Called from MobilePm: updates the URL for the button
@@ -28,21 +31,24 @@ export default function ParentPage() {
 
   return (
     <div>
-      {/* Invisible iframe for iOS popup fallback */}
-      <iframe id="whatsapp-ios-fallback" style={{ display: "none" }}></iframe>
+      {/* Parent WhatsApp button - ONLY for iPhone */}
+    {isIOS && (
+      <>
+        <iframe id="whatsapp-ios-fallback" style={{ display: "none" }}></iframe>
 
-      {/* FIXED iOS SAFE BUTTON */}
-      <a
-        id="pm-whatsapp-link"
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ width: "100%", display: "block", marginBottom: "1rem" }}
-      >
-        <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">
-          Send Selected via WhatsApp
-        </button>
-      </a>
+        <a
+          id="pm-whatsapp-link"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ width: "100%", display: "block", marginBottom: "1rem" }}
+        >
+          <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">
+            Send Selected via WhatsApp
+          </button>
+        </a>
+      </>
+    )}
 
       {/* Your original component */}
       <MobilePm />
