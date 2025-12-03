@@ -6,31 +6,38 @@ export default function MobilePm({ data }) {
   const [isExpand, setIsExpand] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(""); // ✅ inline feedback instead of alert
+
   // Load saved phone
   useEffect(() => {
     const saved = localStorage.getItem("pm_phone");
     if (saved) setPhoneNumber(saved);
   }, []);
 
-const savePhone = () => {
-  if (phoneNumber.trim()) {
-    localStorage.setItem("pm_phone", phoneNumber);
-    setMessage("Phone saved!");
-  } else {
-    setMessage("Enter a valid phone number");
-  }
-};
-
+  const savePhone = () => {
+    if (phoneNumber.trim()) {
+      localStorage.setItem("pm_phone", phoneNumber);
+      setMessage("✅ Phone saved!");
+    } else {
+      setMessage("⚠️ Enter a valid phone number");
+    }
+  };
 
   const clearPhone = () => {
     localStorage.removeItem("pm_phone");
     setPhoneNumber("");
+    setMessage("ℹ️ Phone cleared");
   };
 
   const sendWhatsApp = () => {
-    if (!phoneNumber.trim()) return alert("Enter phone number");
-    if (selectedItems.length === 0) return alert("Select items first");
+    if (!phoneNumber.trim()) {
+      setMessage("⚠️ Enter phone number");
+      return;
+    }
+    if (selectedItems.length === 0) {
+      setMessage("⚠️ Select items first");
+      return;
+    }
 
     const msg = selectedItems
       .map((i, n) => `${n + 1}. ${i["Equipment Name"]} - ${i["Svc Pkg"]}`)
@@ -52,7 +59,8 @@ const savePhone = () => {
       const pkg = item["Svc Pkg"]?.toLowerCase() || "";
       const details = item.ServiceDetails || {};
       const keys = Object.keys(details);
-      const tasks = keys[1] && Array.isArray(details[keys[1]]) ? details[keys[1]] : [];
+      const tasks =
+        keys[1] && Array.isArray(details[keys[1]]) ? details[keys[1]] : [];
 
       const taskMatch = tasks.some((t) => t.toLowerCase().includes(term));
       return name.includes(term) || pkg.includes(term) || taskMatch;
@@ -61,20 +69,18 @@ const savePhone = () => {
 
   const toggleSelectItem = (item) => {
     setSelectedItems((prev) =>
-      prev.includes(item)
-        ? prev.filter((x) => x !== item)
-        : [...prev, item]
+      prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]
     );
   };
 
   return (
     <div className="flex flex-col items-center max-w-[750px] mx-auto">
-
-      <h1 className="font-bold text-lg mt-2">Preventive Maintenance (PM) Schedule 😎</h1>
+      <h1 className="font-bold text-lg mt-2">
+        Preventive Maintenance (PM) Schedule
+      </h1>
 
       {/* --- HEADER SECTION --- */}
       <div className="w-full max-w-md">
-
         {/* Search input */}
         <input
           value={searchTerm}
@@ -85,7 +91,7 @@ const savePhone = () => {
 
         {/* Phone number */}
         <div className="bg-gray-100 p-3 rounded mb-3">
-          <p className="font-semibold mb-1">WhatsApp Number {message && <span className="text-sm text-green-600 ml-2">{message}</span>}</p>
+          <p className="font-semibold mb-1">WhatsApp Number</p>
           <input
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
@@ -93,13 +99,23 @@ const savePhone = () => {
             placeholder="Enter phone number (e.g. 6591234567)"
           />
           <div className="flex gap-3 mt-2">
-            <button onClick={savePhone} className="bg-green-600 text-white px-3 py-1 rounded">
+            <button
+              onClick={savePhone}
+              className="bg-green-600 text-white px-3 py-1 rounded"
+            >
               Save
             </button>
-            <button onClick={clearPhone} className="bg-red-600 text-white px-3 py-1 rounded">
+            <button
+              onClick={clearPhone}
+              className="bg-red-600 text-white px-3 py-1 rounded"
+            >
               Clear
             </button>
           </div>
+          {/* ✅ Inline message */}
+          {message && (
+            <p className="text-sm mt-2 text-blue-700 font-medium">{message}</p>
+          )}
         </div>
 
         {/* WhatsApp send button */}
@@ -109,7 +125,6 @@ const savePhone = () => {
         >
           Send Selected via WhatsApp
         </button>
-
       </div>
 
       <p className="font-mono text-[12px] m-2">{filteredData.length} results found</p>
@@ -118,7 +133,8 @@ const savePhone = () => {
       {filteredData.map((item, index) => {
         const details = item.ServiceDetails || {};
         const keys = Object.keys(details);
-        const tasks = keys[1] && Array.isArray(details[keys[1]]) ? details[keys[1]] : [];
+        const tasks =
+          keys[1] && Array.isArray(details[keys[1]]) ? details[keys[1]] : [];
         const isSelected = selectedItems.includes(item);
 
         return (
@@ -130,7 +146,9 @@ const savePhone = () => {
           >
             {/* Top row */}
             <div className="flex justify-between items-center">
-              <h2 className="font-semibold">Equipment: {item["Equipment Name"]}</h2>
+              <h2 className="font-semibold">
+                Equipment: {item["Equipment Name"]}
+              </h2>
               <input
                 type="checkbox"
                 checked={isSelected}
@@ -154,13 +172,14 @@ const savePhone = () => {
             {/* Task list */}
             {isExpand && selectedId === index && tasks.length > 0 && (
               <ul className="ml-4 list-disc mt-2">
-                {tasks.map((task, i) => <li key={i}>{task}</li>)}
+                {tasks.map((task, i) => (
+                  <li key={i}>{task}</li>
+                ))}
               </ul>
             )}
           </div>
         );
       })}
-
     </div>
   );
 }
